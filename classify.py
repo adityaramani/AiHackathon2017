@@ -74,7 +74,6 @@ def base_model(x_train, num_classes ):
     
     sgd = SGD(lr = 0.1, decay=1e-6, momentum=0.9 ,nesterov=True)
     model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
-    
     return model
 
 def image_to_array(name):
@@ -91,12 +90,12 @@ def one_hot(boxes):
         arr[class_mappings[i]] = 1
     
     return arr
+
 def class_mem(boxes):
     index = []
     for i in boxes:
         index.append(class_mappings[i['class']])
     return index #change
-
 images = []
 with open('image-data.json', encoding='utf-8') as data_file:
     for line in data_file:
@@ -117,7 +116,7 @@ df = pd.DataFrame(images)
 df['file_name'] = df['filepath'].apply(lambda x : x[-5: -16: -1][::-1])
 
 
-sample = df.sample(frac = 0.5)
+sample = df.sample(frac = 0.2)
 
 # print(len(train_names))
 # print(len(test_names))
@@ -126,9 +125,8 @@ sample = df.sample(frac = 0.5)
 # test = sample[sample['file_name'].isin(list(train_names))]
 # train = sample[sample['file_name'].isin(list(test_names))]
 
-sample['new_bboxes'] = sample['bboxes'].apply(new_bboxes)
+# sample['new_bboxes'] = sample['bboxes'].apply(new_bboxes)
 
-'''
 sample['array_repr'] = sample['file_name'].apply(image_to_array)
 sample['class_membs'] = sample['bboxes'].apply(class_mem)
 
@@ -156,5 +154,6 @@ cnn_n = base_model(x_train,  len(list(class_count.keys())))
 
 print(cnn_n.summary())
 
-cnn_n.fit(x_train, y_train, validation_data=(x_test,y_test))
-'''
+cnn_n.fit(x_train, y_train,epochs=1, validation_split=0.2 )
+cnn_n.predict(x_test,y_test)
+

@@ -1,2 +1,8 @@
-/VOC2010
-/keras-frcc
+VOC2010/
+keras-frcc/
+prediction.npy
+CNN_Model.h5
+CNN_Model_2.h5
+y_test.npy
+preprocess.pyc
+__pycache__/

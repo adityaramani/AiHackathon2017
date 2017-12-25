@@ -34,18 +34,24 @@ def multiple_lables(x_train, y_train):
             index_x[i] = arr
     imgs = []
     nos = []
-        
-    for i in index_x:    
-        arr = index_x[i]
-        img = x_train[i]
-        for j in arr:
-            nos.append([j])
-            imgs.append(img)
-
-
-    imgs = np.array(imgs)
-    nos = np.array(nos)        
-            
-    x_train = np.append(imgs, x_train ,axis=0)
-    y_train = np.append(nos, y_train , axis=0)
+   
     return x_train, y_train
+
+
+def reshape_array(np_array):
+    l = [len(np_array)]
+    dimen = np_array[0].shape
+    print(shape)
+    shp = tuple( l + list(dimen))
+    zeros = np.zeros(shp)
+    for i in range(l[0]):
+        zeros[i] = np_array[i]
+    return zeros
+
+
+def reshape_array1(np_array):
+    l = []
+    for i in np_array:
+        l.append(i)
+    
+    return np.array(l)
